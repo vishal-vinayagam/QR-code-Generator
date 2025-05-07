@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Generator</title>
+    <style>
+        body{
+            margin:0;
+            padding:0;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            box-sizing: border-box;
+           background-color: white;
+            width:100%;
+            height: 100vh;
+        }
+        .container{
+            background: rgb(244, 255, 254);
+            border-radius: 10px;
+            width:20%;
+            padding: 25px 30px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%); /top-bottom right-left => helps in aligning the items center - '-' indicates reducing '+' indicated increasing/       
+        }
+        
+        .container p{
+            font-size: 19px;
+            font-weight: 770;
+            margin-bottom: 8px;
+        }
+        .container input{
+            border: 2.5px solid rgb(178, 163, 136);
+            outline: none;
+            border-radius: 5px;
+            width: 90%;
+            height: 35px;
+            margin: 30px 30px 30px 0;
+            padding:10px;
+            font-size: 15px;
+        }
+        .container button{
+            border: none;
+            outline: none;
+            color: rgb(178, 163, 136);
+            font-size: 17px;
+            font-weight: 550;
+            border-radius: 5px;
+            width: 96%;
+            height: 50px;
+            box-shadow: 0 10px 10px rgba(0,0,0,0.1);
+            background: rgb(178);
+            cursor: pointer;
+            margin: 30px 0;
+        }
+        .container button:hover{
+            width: 99%;
+            height: 60px;
+        }
+        .imgb{
+            width: 200px;
+            border-radius: 40px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 1s;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left:20px;
+        }
+        .imgb img{
+            width:100%;
+            justify-content: center;
+            align-items: center;
+            padding:20px 25px;
+        }
+        .imgb.show-img{
+            max-height: 400px;
+            margin: 5px;
+            border: 1.5px solid rgb(203, 199, 199);
+            justify-content: center;
+            align-items: center;
+        }
+        .error{
+            animation: shake 0.1s linear 10;
+        }
+        @keyframes shake {
+            0%{
+                transform: translateX(0);
+            }
+            25%{
+                transform: translateX(-2px);
+            }
+            50%{
+                transform: translateX(0);
+            }
+            75%{
+                transform: translateX(2px);
+            }
+            100%{
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+    <body>
+        <div class="container">
+            <p>Enter your text or URL</p>
+            <input type="text" placeholder="Text or URL" id="qrtext">
+            
+            <div class="imgb" id="imgbox">
+                <img src="" id="qrimg">
+            </div>
+
+            <button onclick="generateqr()">Generate QR Code</button>
+
+        </div>
+
+        <script>
+            let imgBox = document.getElementById("imgbox")
+            let qrImg = document.getElementById("qrimg")
+            let qrText = document.getElementById("qrtext")
+
+            
+            function generateqr()
+            {
+                if(qrText.value.length > 0)
+                {
+                    qrImg.src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + qrText.value
+                    imgBox.classList.add("show-img")
+                }
+                else{
+                    qrText.classList.add("error")
+                    setTimeout(()=>{
+                        qrText.classList.add('error')
+                    },1000)
+                }    
+            }
+        </script>
+    </body>
+</html>
